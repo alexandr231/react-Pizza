@@ -1,26 +1,37 @@
-import Categories from './Components/Categories';
+import axios from 'axios';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
-import PizzaBlock from './Components/PizzaBlock';
-import Sort from './Components/Sort';
+import Cart from './Pages/Cart';
+import Home from './Pages/Home';
+import NotFound from './Pages/NotFound';
 import './scss/app.scss';
 
 function App() {
+  const getPizzas = async () => {
+    let response = await axios.get('https://63e3bb4365ae49317716207a.mockapi.io/items/');
+    setPizzas(response.data);
+    toggleIsFetching(false);
+  };
+
+  const [pizzas, setPizzas] = React.useState([]);
+  const [isFetching, toggleIsFetching] = React.useState(true);
+
+  React.useEffect(() => {
+    getPizzas();
+  }, []);
+
   return (
     <div className="App">
-      <div class="wrapper">
+      <div className="wrapper">
         <Header />
-        <div class="content">
-          <div class="container">
-            <div class="content__top">
-              <Categories></Categories>
-              <Sort></Sort>
-            </div>
-            <h2 class="content__title">Все пиццы</h2>
-            <div class="content__items">
-              <PizzaBlock name='По кайфу' price={500}/>
-              <PizzaBlock name='Крысиная' price={400}/>
-              <PizzaBlock name='С тушенкой' price={300}/>
-            </div>
+        <div className="content">
+          <div className="container">
+            <Routes>
+                <Route path='/' element={<Home pizzas={pizzas} isFetching={isFetching}></Home>}></Route>
+                <Route path='/cart' element={<Cart></Cart>}></Route>
+                <Route path='*' element={<NotFound></NotFound>}></Route>
+            </Routes>
           </div>
         </div>
       </div>

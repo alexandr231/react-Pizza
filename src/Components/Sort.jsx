@@ -1,6 +1,11 @@
 import React from 'react';
 
 export default function Sort() {
+  const sortTypes = ['популярности', 'цене', 'алфавиту'];
+
+  const [isSortBarVisible, toggleSortBar] = React.useState(false);
+  const [activeSortType, setActiveSortType] = React.useState(0);
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -15,15 +20,26 @@ export default function Sort() {
             fill="#2C2C2C"></path>
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => {toggleSortBar(!isSortBarVisible)}}>{sortTypes[activeSortType]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {isSortBarVisible ? (
+        <div className="sort__popup">
+          <ul>
+            {sortTypes.map((sortType, i) => (
+              <li
+                className={i === activeSortType ? 'active' : ''}
+                onClick={() => {
+                  setActiveSortType(i);
+                  toggleSortBar(false);
+                }}>
+                {sortType}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
