@@ -1,10 +1,34 @@
 import React from 'react';
 
-export default function Sort() {
-  const sortTypes = ['популярности', 'цене', 'алфавиту'];
+export default function Sort({ activeSortType, setActiveSortType, }) {
+  const sortTypes = [
+    {
+      name: 'популярности(ASC)',
+      sortProperty: 'rating',
+    },
+    {
+        name: 'популярности(DESC)',
+        sortProperty: '-rating',
+      },
+    {
+      name: 'цене(ASC)',
+      sortProperty: 'price',
+    },
+    {
+        name: 'цене(DESC)',
+        sortProperty: '-price',
+      },
+    {
+      name: 'названию(ASC)',
+      sortProperty: 'title',
+    },
+    {
+        name: 'названию(DESC)',
+        sortProperty: '-title',
+      },
+  ];
 
   const [isSortBarVisible, toggleSortBar] = React.useState(false);
-  const [activeSortType, setActiveSortType] = React.useState(0);
 
   return (
     <div className="sort">
@@ -20,19 +44,24 @@ export default function Sort() {
             fill="#2C2C2C"></path>
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => {toggleSortBar(!isSortBarVisible)}}>{sortTypes[activeSortType]}</span>
+        <span
+          onClick={() => {
+            toggleSortBar(!isSortBarVisible);
+          }}>
+          {activeSortType.name}
+        </span>
       </div>
       {isSortBarVisible ? (
         <div className="sort__popup">
           <ul>
             {sortTypes.map((sortType, i) => (
-              <li
-                className={i === activeSortType ? 'active' : ''}
+              <li key={sortType.sortProperty}
+                className={sortType.sortProperty === activeSortType.sortProperty ? 'active' : ''}
                 onClick={() => {
-                  setActiveSortType(i);
+                  setActiveSortType(sortType);
                   toggleSortBar(false);
                 }}>
-                {sortType}
+                {sortType.name}
               </li>
             ))}
           </ul>
