@@ -1,32 +1,37 @@
 import React from 'react';
+import { setSort } from '../Redux/slices/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Sort({ activeSortType, setActiveSortType, }) {
+export default function Sort() {
   const sortTypes = [
     {
       name: 'популярности(ASC)',
       sortProperty: 'rating',
     },
     {
-        name: 'популярности(DESC)',
-        sortProperty: '-rating',
-      },
+      name: 'популярности(DESC)',
+      sortProperty: '-rating',
+    },
     {
       name: 'цене(ASC)',
       sortProperty: 'price',
     },
     {
-        name: 'цене(DESC)',
-        sortProperty: '-price',
-      },
+      name: 'цене(DESC)',
+      sortProperty: '-price',
+    },
     {
       name: 'названию(ASC)',
       sortProperty: 'title',
     },
     {
-        name: 'названию(DESC)',
-        sortProperty: '-title',
-      },
+      name: 'названию(DESC)',
+      sortProperty: '-title',
+    },
   ];
+
+  const sort = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
 
   const [isSortBarVisible, toggleSortBar] = React.useState(false);
 
@@ -48,17 +53,18 @@ export default function Sort({ activeSortType, setActiveSortType, }) {
           onClick={() => {
             toggleSortBar(!isSortBarVisible);
           }}>
-          {activeSortType.name}
+          {sort.name}
         </span>
       </div>
       {isSortBarVisible ? (
         <div className="sort__popup">
           <ul>
             {sortTypes.map((sortType, i) => (
-              <li key={sortType.sortProperty}
-                className={sortType.sortProperty === activeSortType.sortProperty ? 'active' : ''}
+              <li
+                key={sortType.sortProperty}
+                className={sortType.sortProperty === sort.sortProperty ? 'active' : ''}
                 onClick={() => {
-                  setActiveSortType(sortType);
+                  dispatch(setSort(sortType));
                   toggleSortBar(false);
                 }}>
                 {sortType.name}

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Cart from './Pages/Cart';
@@ -10,18 +11,13 @@ import './scss/app.scss';
 function App() {
   const [pizzas, setPizzas] = React.useState([]);
   const [isFetching, toggleIsFetching] = React.useState(true);
-  const [activeCategoryIndex, setActiveCategoryIndex] = React.useState(0);
-  const [activeSortType, setActiveSortType] = React.useState({
-    name: 'популярности',
-    sortProperty: 'rating',
-  });
-  const [searchInput, setSearchInput] = React.useState('');
-  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const {categoryId, sort, currentPage, searchInput} = useSelector((state) => state.filter);
 
   React.useEffect(() => {
-    let categoryRequest = activeCategoryIndex > 0 ? `category=${activeCategoryIndex}` : '';
-    let sortBy = `&sortBy=${activeSortType.sortProperty.replace('-','')}`;
-    let order = activeSortType.sortProperty.includes('-') ? 'desc' : 'asc';
+    let categoryRequest = categoryId > 0 ? `category=${categoryId}` : '';
+    let sortBy = `&sortBy=${sort.sortProperty.replace('-','')}`;
+    let order = sort.sortProperty.includes('-') ? 'desc' : 'asc';
 
     const getPizzas = async () => {
     toggleIsFetching(true);
@@ -34,12 +30,12 @@ function App() {
 
     getPizzas();
     window.scrollTo(0, 0);
-  }, [activeSortType, activeCategoryIndex, searchInput,currentPage]);
+  }, [sort, categoryId, searchInput,currentPage]);
 
   return (
     <div className="App">
       <div className="wrapper">
-        <Header searchInput={searchInput} setSearchInput={setSearchInput}/>
+        <Header />
         <div className="content">
           <Routes>
             <Route
@@ -48,15 +44,6 @@ function App() {
                 <Home
                   pizzas={pizzas}
                   isFetching={isFetching}
-                  activeSortType={activeSortType}
-                  setActiveSortType={(i) => {
-                    setActiveSortType(i);
-                  }}
-                  activeCategoryIndex={activeCategoryIndex}
-                  setActiveCategoryIndex={(i) => {
-                    setActiveCategoryIndex(i);
-                  }}
-                  setCurrentPage={setCurrentPage}
                   ></Home>
               }></Route>
             <Route path="/cart" element={<Cart></Cart>}></Route>
