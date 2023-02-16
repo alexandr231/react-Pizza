@@ -4,21 +4,36 @@ import searchLogo from '../../Assets/img/searchLogo.png';
 import closeLogo from '../../Assets/img/closeLogo.svg';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { setSearchInput } from '../../Redux/slices/filterSlice';
+import debounce from 'lodash.debounce';
 
 export default function Search() {
-
   const searchInput = useSelector((state) => state.filter.searchInput);
   const dispatch = useDispatch();
+
+  const inputRef = React.useRef();
+
+  const [ inputValue, setValue ]  = React.useState('');
+
+  const updateSearchInput = React.useCallback(
+    debounce((str) => {
+      dispatch(setSearchInput(str));
+    }, 250), []);
+
+  const onChangeValue = (e) => {
+    setValue(e.target.value);
+    updateSearchInput(e.target.value);
+  };
 
   return (
     <div className={styles.root}>
       <img className={styles.searchLogo} src={searchLogo} alt=""></img>
       <input
+        ref={inputRef}
         className={styles.input}
         placeholder="Поиск пиццы..."
-        value={searchInput}
+        value={inputValue}
         onChange={(e) => {
-          dispatch(setSearchInput(e.target.value));
+          onChangeValue(e);
         }}></input>
       {searchInput && (
         <img
@@ -27,6 +42,8 @@ export default function Search() {
           alt=""
           onClick={() => {
             dispatch(setSearchInput(''));
+            setValue('');
+            inputRef.current.focus();
           }}></img>
       )}
     </div>
