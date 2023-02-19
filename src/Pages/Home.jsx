@@ -5,12 +5,12 @@ import PizzaBlock from '../Components/PizzaBlock/PizzaBlock';
 import { Skeleton } from '../Components/PizzaBlock/PizzaBlockSkeleton';
 import Sort from '../Components/Sort';
 
-export default function Home({pizzas, isFetching, activeSortType, setActiveSortType, activeCategoryIndex, setActiveCategoryIndex, setCurrentPage} ) {
+export default function Home({pizzas, isFetching} ) {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeIndex={activeCategoryIndex} setActiveIndex={(i)=>{setActiveCategoryIndex(i)}}></Categories>
-        <Sort activeSortType={activeSortType} setActiveSortType={(i)=>{setActiveSortType(i)}} ></Sort>
+        <Categories></Categories>
+        <Sort></Sort>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -18,7 +18,7 @@ export default function Home({pizzas, isFetching, activeSortType, setActiveSortT
           ? [...new Array(6)].map((_, i) => <Skeleton key={i}></Skeleton>)
           : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza}></PizzaBlock>)}
       </div>
-      <Pagination setCurrentPage={setCurrentPage}></Pagination>
+      <Pagination></Pagination>
     </div>
   );
 }
