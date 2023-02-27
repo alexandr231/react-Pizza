@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addPizzaToCart } from '../../Redux/slices/cartSlice';
 export default function PizzaBlock(props) {
   const typeNames = ['тонкое', 'традиционное'];
@@ -25,7 +26,9 @@ export default function PizzaBlock(props) {
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
+        <Link to={`/pizza/${props.id}`}>
+          <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
+        </Link>
         <h4 className="pizza-block__title">{props.title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -51,9 +54,7 @@ export default function PizzaBlock(props) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {props.price} ₽</div>
-          <button
-            onClick={onClickAdd}
-            className="button button--outline button--add">
+          <button onClick={onClickAdd} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
