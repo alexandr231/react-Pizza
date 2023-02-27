@@ -2,11 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CartEmpty from '../Components/Cart/CartEmpty';
 import CartItem from '../Components/Cart/CartItem';
-import { clearPizzasInCart } from '../Redux/slices/cartSlice';
+import { clearPizzasInCart, selectCart } from '../Redux/slices/cartSlice';
 
 export default function Cart() {
   const pizzas = useSelector((state) => state.cart.items);
-  const {totalCount, totalPrice} = useSelector((state) => state.cart);
+  const {totalCount, totalPrice} = useSelector(selectCart);
   const dispatch = useDispatch();
   if (totalPrice === 0) {
     return (<CartEmpty></CartEmpty>)
