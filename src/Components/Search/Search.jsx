@@ -14,10 +14,10 @@ export default function Search() {
 
   const [ inputValue, setValue ]  = React.useState('');
 
-  const updateSearchInput = React.useCallback(
-    debounce((str) => {
+  const updateSearchInput = React.useMemo(
+    () => debounce((str) => {
       dispatch(setSearchInput(str));
-    }, 250), []);
+    }, 250), [dispatch]);
 
   const onChangeValue = (e) => {
     setValue(e.target.value);
