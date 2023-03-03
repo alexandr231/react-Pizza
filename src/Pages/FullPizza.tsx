@@ -2,9 +2,13 @@ import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-export default function FullPizza() {
+const FullPizza: React.FC = () => {
   const { id } = useParams();
-  const [ pizza, setPizza ] = React.useState();
+  const [ pizza, setPizza ] = React.useState<{
+    title: string,
+    imageUrl: string,
+    price: number
+  }>();
 
   React.useEffect(() => {
     const fetchFullPizza = async () => {
@@ -29,3 +33,5 @@ export default function FullPizza() {
     </div>
   );
 }
+
+export default FullPizza;
