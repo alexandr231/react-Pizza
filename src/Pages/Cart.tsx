@@ -4,8 +4,8 @@ import CartEmpty from '../Components/Cart/CartEmpty';
 import CartItem from '../Components/Cart/CartItem';
 import { clearPizzasInCart, selectCart } from '../Redux/slices/cartSlice';
 
-export default function Cart() {
-  const pizzas = useSelector((state) => state.cart.items);
+const Cart: React.FC = () => {
+  const pizzas = useSelector((state:any) => state.cart.items);
   const {totalCount, totalPrice} = useSelector(selectCart);
   const dispatch = useDispatch();
   if (totalPrice === 0) {
@@ -33,7 +33,7 @@ export default function Cart() {
                 d="M14.3333 16.3333C15.0697 16.3333 15.6667 15.7364 15.6667 15C15.6667 14.2636 15.0697 13.6667 14.3333 13.6667C13.597 13.6667 13 14.2636 13 15C13 15.7364 13.597 16.3333 14.3333 16.3333Z"
                 stroke="white"
                 strokeWidth="1.8"
-                strokeLlinecap="round"
+                strokeLinecap="round"
                 strokeLinejoin="round"></path>
               <path
                 d="M4.78002 4.99999H16.3334L15.2134 10.5933C15.1524 10.9003 14.9854 11.176 14.7417 11.3722C14.4979 11.5684 14.1929 11.6727 13.88 11.6667H6.83335C6.50781 11.6694 6.1925 11.553 5.94689 11.3393C5.70128 11.1256 5.54233 10.8295 5.50002 10.5067L4.48669 2.82666C4.44466 2.50615 4.28764 2.21182 4.04482 1.99844C3.80201 1.78505 3.48994 1.66715 3.16669 1.66666H1.66669"
@@ -81,7 +81,7 @@ export default function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {pizzas.map((pizza, i) => (
+          {pizzas.map((pizza:any, i: number) => (
             <CartItem key={i} pizza={pizza}></CartItem>
           ))}
           <div className="cart__bottom">
@@ -123,3 +123,5 @@ export default function Cart() {
     </div>
   );
 }
+
+export default Cart;

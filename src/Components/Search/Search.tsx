@@ -7,10 +7,10 @@ import { setSearchInput } from '../../Redux/slices/filterSlice';
 import debounce from 'lodash.debounce';
 
 export default function Search() {
-  const searchInput = useSelector((state) => state.filter.searchInput);
+  const searchInput = useSelector((state: any) => state.filter.searchInput);
   const dispatch = useDispatch();
 
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [ inputValue, setValue ]  = React.useState('');
 
@@ -19,7 +19,7 @@ export default function Search() {
       dispatch(setSearchInput(str));
     }, 250), [dispatch]);
 
-  const onChangeValue = (e) => {
+  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     updateSearchInput(e.target.value);
   };
@@ -32,9 +32,7 @@ export default function Search() {
         className={styles.input}
         placeholder="Поиск пиццы..."
         value={inputValue}
-        onChange={(e) => {
-          onChangeValue(e);
-        }}></input>
+        onChange={onChangeValue}></input>
       {searchInput && (
         <img
           className={styles.closeLogo}
@@ -43,7 +41,7 @@ export default function Search() {
           onClick={() => {
             dispatch(setSearchInput(''));
             setValue('');
-            inputRef.current.focus();
+            inputRef.current?.focus();
           }}></img>
       )}
     </div>

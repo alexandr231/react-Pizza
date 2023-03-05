@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 
 export default function Categories() {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filter.categoryId)
+
+  const categoryId: number = useSelector((state:any) => state.filter.categoryId)
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (

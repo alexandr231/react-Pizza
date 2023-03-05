@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux/es/exports'
 import { setCurrentPage } from '../../Redux/slices/filterSlice'
 
 export default function Pagination() {
-  const currentPage = useSelector(state => state.filter.currentPage)
+  const currentPage = useSelector((state:any) => state.filter.currentPage)
   const dispatch = useDispatch();
   return (
     <ReactPaginate className={styles.root}
@@ -17,7 +17,6 @@ export default function Pagination() {
         pageRangeDisplayed={4}
         pageCount={3}
         previousLabel="<"
-        renderOnZeroPageCount={null}
         forcePage={currentPage-1}
       />
   )

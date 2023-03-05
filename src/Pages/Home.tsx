@@ -11,14 +11,14 @@ import { sortTypes } from '../Components/Sort';
 import { setFilters } from '../Redux/slices/filterSlice';
 import qs from 'qs';
 
-export default function Home() {
-  const pizzas = useSelector((state) => state.pizzas.items);
-  const loading = useSelector((state) => state.pizzas.loading);
+const Home: React.FC = () => {
+  const pizzas = useSelector((state: any) => state.pizzas.items);
+  const loading = useSelector((state: any) => state.pizzas.loading);
 
   const navigate = useNavigate();
   let isMounted = React.useRef(false);
   let isSearch = React.useRef(false);
-  const { categoryId, sort, currentPage, searchInput } = useSelector((state) => state.filter);
+  const { categoryId, sort, currentPage, searchInput } = useSelector((state: any) => state.filter);
   const dispatch = useDispatch();
 
   //Если первый рендер уже был, то вставляем параметры в URL
@@ -59,6 +59,7 @@ export default function Home() {
     let order = sort.sortProperty.includes('-') ? 'desc' : 'asc';
 
     if (!isSearch.current) {
+      // @ts-ignore
       dispatch(fetchPizzas({ currentPage, categoryRequest, sortBy, order, searchInput }));
     }
 
@@ -82,10 +83,12 @@ export default function Home() {
         <div className="content__items">
           {loading === 'pending'
             ? [...new Array(6)].map((_, i) => <Skeleton key={i}></Skeleton>)
-            : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza}></PizzaBlock>)}
+            : pizzas.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza}></PizzaBlock>)}
         </div>
       )}
       <Pagination></Pagination>
     </div>
   );
-}
+};
+
+export default Home;

@@ -2,7 +2,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addPizzaToCart } from '../../Redux/slices/cartSlice';
-export default function PizzaBlock(props) {
+
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  imageUrl: string;
+  rating: number;
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
   const typeNames = ['тонкое', 'традиционное'];
 
   const [pizzaCount, setPizzaCount] = React.useState(0);
@@ -73,3 +84,5 @@ export default function PizzaBlock(props) {
     </div>
   );
 }
+
+export default PizzaBlock;

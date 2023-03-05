@@ -2,7 +2,11 @@ import React from 'react';
 import { setSort } from '../Redux/slices/filterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const sortTypes = [
+type SortTypesItem = {
+  name: string;
+  sortProperty: string;
+}
+export const sortTypes: SortTypesItem[] = [
   {
     name: 'популярности(ASC)',
     sortProperty: 'rating',
@@ -29,19 +33,19 @@ export const sortTypes = [
   },
 ];
 
-export default function Sort() {
+const Sort: React.FC = () => {
 
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector((state: any) => state.filter.sort);
   const dispatch = useDispatch();
 
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [isSortBarVisible, toggleSortBar] = React.useState(false);
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      let path = event.composedPath().includes(sortRef.current);
-      if (!path) toggleSortBar(false);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current)  {let path = event.composedPath().includes(sortRef.current);
+      if (!path) toggleSortBar(false);}
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -92,3 +96,5 @@ export default function Sort() {
     </div>
   );
 }
+
+export default Sort;
