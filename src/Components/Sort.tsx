@@ -1,35 +1,35 @@
 import React from 'react';
-import { setSort } from '../Redux/slices/filterSlice';
+import { setSort, SortPropertyEnum } from '../Redux/slices/filterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 type SortTypesItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortPropertyEnum;
 }
 export const sortTypes: SortTypesItem[] = [
   {
     name: 'популярности(ASC)',
-    sortProperty: 'rating',
+    sortProperty: SortPropertyEnum.RATING_ASC,
   },
   {
     name: 'популярности(DESC)',
-    sortProperty: '-rating',
+    sortProperty: SortPropertyEnum.RATING_DESC,
   },
   {
     name: 'цене(ASC)',
-    sortProperty: 'price',
+    sortProperty: SortPropertyEnum.PRICE_ASC,
   },
   {
     name: 'цене(DESC)',
-    sortProperty: '-price',
+    sortProperty: SortPropertyEnum.PRICE_DESC,
   },
   {
     name: 'названию(ASC)',
-    sortProperty: 'title',
+    sortProperty: SortPropertyEnum.TITLE_ASC,
   },
   {
     name: 'названию(DESC)',
-    sortProperty: '-title',
+    sortProperty: SortPropertyEnum.TITLE_DESC,
   },
 ];
 

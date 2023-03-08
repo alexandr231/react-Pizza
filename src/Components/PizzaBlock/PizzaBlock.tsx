@@ -31,6 +31,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
         price: props.price,
         imageUrl: props.imageUrl,
         id: props.id,
+        count:0,
       }),
     );
   };
