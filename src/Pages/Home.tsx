@@ -6,9 +6,10 @@ import PizzaBlock from '../Components/PizzaBlock/PizzaBlock';
 import { Skeleton } from '../Components/PizzaBlock/PizzaBlockSkeleton';
 import Sort from '../Components/Sort';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPizzas, SearchPizzaParams, Status } from '../Redux/slices/pizzasSlice';
+import { fetchPizzas } from '../Redux/slices/pizzas/slice';
+import {SearchPizzaParams, Status} from '../Redux/slices/pizzas/types'
 import { sortTypes } from '../Components/Sort';
-import { setFilters } from '../Redux/slices/filterSlice';
+import { setFilters } from '../Redux/slices/filter/slice';
 import qs from 'qs';
 import { RootState } from '../Redux/store';
 

@@ -2,7 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CartEmpty from '../Components/Cart/CartEmpty';
 import CartItem from '../Components/Cart/CartItem';
-import { clearPizzasInCart, selectCart } from '../Redux/slices/cartSlice';
+import { clearPizzasInCart } from '../Redux/slices/cart/slice';
+import { selectCart } from '../Redux/slices/cart/selectors';
 
 const Cart: React.FC = () => {
   const pizzas = useSelector((state:any) => state.cart.items);

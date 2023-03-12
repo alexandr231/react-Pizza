@@ -2,7 +2,7 @@ import React from 'react'
 import ReactPaginate from 'react-paginate'
 import styles from './Pagination.module.scss'
 import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { setCurrentPage } from '../../Redux/slices/filterSlice'
+import { setCurrentPage } from '../../Redux/slices/filter/slice'
 
 export default function Pagination() {
   const currentPage = useSelector((state:any) => state.filter.currentPage)

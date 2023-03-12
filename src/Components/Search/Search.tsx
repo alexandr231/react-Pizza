@@ -3,7 +3,7 @@ import styles from './Search.module.scss';
 import searchLogo from '../../Assets/img/searchLogo.png';
 import closeLogo from '../../Assets/img/closeLogo.svg';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { setSearchInput } from '../../Redux/slices/filterSlice';
+import { setSearchInput } from '../../Redux/slices/filter/slice';
 import debounce from 'lodash.debounce';
 
 export default function Search() {

@@ -1,28 +1,18 @@
-import { RootState } from './../store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { calcTotalCount } from './../../../utils/calcTotalCount';
+import { calcTotalPrice } from './../../../utils/calcTotalPrice';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getCartFromLs } from "../../../utils/getCartFromLS";
+import { CartItem, CartSliceState } from "./types";
 
-type CartItem = {
-  id: string;
-  title: string;
-  type: string;
-  size: number;
-  count: number;
-  price: number;
-  imageUrl: string;
-};
+const {items, totalPrice, totalCount} = getCartFromLs();
 
-type CartSliceState = {
-  items: CartItem[],
-  totalPrice: number,
-  totalCount: number,
-}
 const initialState: CartSliceState = {
-  items: [],
-  totalPrice: 0,
-  totalCount: 0,
+  items,
+  totalPrice,
+  totalCount
 };
 
-export const cartSlice = createSlice({
+const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
@@ -42,13 +32,9 @@ export const cartSlice = createSlice({
         });
       }
 
-      state.totalPrice = state.items.reduce((sum, pizza) => {
-        return pizza.price * pizza.count + sum;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.items);
 
-      state.totalCount = state.items.reduce((count, pizza) => {
-        return pizza.count + count;
-      }, 0);
+      state.totalCount = calcTotalCount(state.items);
     },
     removePizzaFromCart(state, action: PayloadAction<CartItem>) {
       state.items = state.items.filter(
@@ -58,13 +44,9 @@ export const cartSlice = createSlice({
           pizza.type !== action.payload.type,
       );
 
-      state.totalPrice = state.items.reduce((sum, pizza) => {
-        return pizza.price * pizza.count + sum;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.items);
 
-      state.totalCount = state.items.reduce((count, pizza) => {
-        return pizza.count + count;
-      }, 0);
+      state.totalCount = calcTotalCount(state.items);
     },
     minusPizza(state, action: PayloadAction<CartItem>) {
       let pizzaInCart = state.items.find(
@@ -77,13 +59,9 @@ export const cartSlice = createSlice({
         pizzaInCart.count--;
       }
 
-      state.totalPrice = state.items.reduce((sum, pizza) => {
-        return pizza.price * pizza.count + sum;
-      }, 0);
+      state.totalPrice = calcTotalPrice(state.items);
 
-      state.totalCount = state.items.reduce((count, pizza) => {
-        return pizza.count + count;
-      }, 0);
+      state.totalCount = calcTotalCount(state.items);
     },
     clearPizzasInCart(state) {
       state.items = [];
@@ -94,7 +72,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state: RootState) => state.cart;
 // Action creators are generated for each case reducer function
 export const { addPizzaToCart, removePizzaFromCart, minusPizza, clearPizzasInCart } =
   cartSlice.actions;

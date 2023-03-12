@@ -1,5 +1,5 @@
 import React from 'react';
-import { setCategoryId } from '../Redux/slices/filterSlice';
+import { setCategoryId } from '../Redux/slices/filter/slice';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { RootState } from '../Redux/store';
 
