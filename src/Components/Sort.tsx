@@ -33,7 +33,7 @@ export const sortTypes: SortTypesItem[] = [
   },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
 
   const sort = useSelector((state: any) => state.filter.sort);
   const dispatch = useDispatch();
@@ -95,6 +95,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+})
 
 export default Sort;
